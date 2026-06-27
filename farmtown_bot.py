@@ -355,15 +355,15 @@ class FarmBot:
                 elif ra and now >= ra: ready.append(t)
             elif blk and blk != 'none':
                 blocked.append(t)      # has blocker, need clear first
-            elif gs == 'grass':
-                grass.append(t)        # grass with no blocker, hoe directly
+            elif gs == 'grass' or gs == 'cleared':
+                grass.append(t)        # grass/cleared, hoe to till
             elif gs == 'tilled':
                 tilled.append(t)
 
         acted = False
 
-        # 0. Auto buy land
-        if self.auto_land:
+        # 0. Auto buy land (only if gold > seed cost * 5, reserve for planting)
+        if self.auto_land and self.gold >= ci['cost'] * 5:
             acted |= self._do_buy_land()
 
         # 1. Auto axe trees
@@ -400,6 +400,13 @@ class FarmBot:
             r = self.conn.act('hoe', tileX=t['x'], tileY=t['y'], selectedTool='hoe')
             if r.get('ok'):
                 self.stats['tilled'] += 1; acted = True
+            elif 'Clear blocker' in r.get('message', ''):
+                # Tile has blocker, clear first then hoe
+                self.conn.act('clear', tileX=t['x'], tileY=t['y'], selectedTool='axe')
+                time.sleep(0.3)
+                r2 = self.conn.act('hoe', tileX=t['x'], tileY=t['y'], selectedTool='hoe')
+                if r2.get('ok'):
+                    self.stats['tilled'] += 1; acted = True
             time.sleep(0.3)
 
         # 6. Buy seeds + plant on tilled tiles
@@ -443,14 +450,21 @@ class FarmBot:
                 if (nx, ny) not in owned:
                     tile = self.conn.tiles.get((nx, ny))
                     if tile and tile.get('ownerState') != 'owned':
+                        # Check gold before buying (100 per plot)
+                        if self.gold < 200:  # reserve at least 100 after buy
+                            return acted
                         r = self.conn.act('buyPlot', tileX=nx, tileY=ny)
                         if r.get('ok'):
                             self.stats['land_bought'] += 1
                             acted = True
                             print(self._p(f"[LAND] Bought ({nx},{ny})"))
                             time.sleep(0.3)
-                            # Hoe immediately so it's ready for planting
+                            # Hoe immediately, handle blocker if needed
                             r2 = self.conn.act('hoe', tileX=nx, tileY=ny, selectedTool='hoe')
+                            if not r2.get('ok') and 'Clear blocker' in r2.get('message', ''):
+                                self.conn.act('clear', tileX=nx, tileY=ny, selectedTool='axe')
+                                time.sleep(0.3)
+                                r2 = self.conn.act('hoe', tileX=nx, tileY=ny, selectedTool='hoe')
                             if r2.get('ok'):
                                 self.stats['tilled'] += 1
                                 print(self._p(f"[LAND] Hoed ({nx},{ny})"))
