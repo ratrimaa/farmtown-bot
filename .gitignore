@@ -1,0 +1,26 @@
+# Sensitive data
+session.json
+wallet.json
+accounts/
+supabase_key.txt
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
