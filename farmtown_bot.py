@@ -362,8 +362,8 @@ class FarmBot:
 
         acted = False
 
-        # 0. Auto buy land (only if gold > seed cost * 5, reserve for planting)
-        if self.auto_land and self.gold >= ci['cost'] * 5:
+        # 0. Auto buy land (reserve 2000 gold for seeds)
+        if self.auto_land and self.gold >= 2000 + ci['cost'] * 5:
             acted |= self._do_buy_land()
 
         # 1. Auto axe trees
@@ -450,8 +450,8 @@ class FarmBot:
                 if (nx, ny) not in owned:
                     tile = self.conn.tiles.get((nx, ny))
                     if tile and tile.get('ownerState') != 'owned':
-                        # Check gold before buying (100 per plot)
-                        if self.gold < 200:  # reserve at least 100 after buy
+                        # Check gold before buying (reserve 2000 for seeds)
+                        if self.gold < 2100:
                             return acted
                         r = self.conn.act('buyPlot', tileX=nx, tileY=ny)
                         if r.get('ok'):
