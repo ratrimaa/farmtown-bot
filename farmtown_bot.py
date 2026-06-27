@@ -172,8 +172,8 @@ class FarmConn:
         def on_farm(data):
             n = 0
             for t in data.get('tiles', []):
+                self.tiles[(t['x'], t['y'])] = t
                 if t.get('ownerState') == 'owned':
-                    self.tiles[(t['x'], t['y'])] = t
                     n += 1
             print(self._p(f"[FARM] {n} tiles"))
         @sio.on('player:farmState/sync')
@@ -258,7 +258,7 @@ class FarmConn:
             return {'ok': False, 'type': action, 'message': str(e)}
 
     def owned_tiles(self):
-        return list(self.tiles.values())
+        return [t for t in self.tiles.values() if t.get('ownerState') == 'owned']
 
 
 class FarmBot:
