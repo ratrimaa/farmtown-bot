@@ -433,7 +433,7 @@ class FarmBot:
         self.empty_streak = 0 if acted else self.empty_streak + 1
 
     def _do_buy_land(self):
-        """Buy unowned tiles adjacent to owned tiles."""
+        """Buy unowned tiles adjacent to owned tiles, then hoe them."""
         acted = False
         owned = set((t['x'], t['y']) for t in self.conn.owned_tiles())
         # Find adjacent unowned tiles
@@ -443,13 +443,18 @@ class FarmBot:
                 if (nx, ny) not in owned:
                     tile = self.conn.tiles.get((nx, ny))
                     if tile and tile.get('ownerState') != 'owned':
-                        # Try to buy this tile via game:action
                         r = self.conn.act('buyPlot', tileX=nx, tileY=ny)
                         if r.get('ok'):
                             self.stats['land_bought'] += 1
                             acted = True
                             print(self._p(f"[LAND] Bought ({nx},{ny})"))
-                        time.sleep(0.5)
+                            time.sleep(0.3)
+                            # Hoe immediately so it's ready for planting
+                            r2 = self.conn.act('hoe', tileX=nx, tileY=ny, selectedTool='hoe')
+                            if r2.get('ok'):
+                                self.stats['tilled'] += 1
+                                print(self._p(f"[LAND] Hoed ({nx},{ny})"))
+                        time.sleep(0.3)
         return acted
 
     def _do_orders(self):
