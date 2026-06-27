@@ -20,12 +20,26 @@ WALLET_FILE = "wallet.json"
 TOKEN_FILE = "session.json"
 
 CROPS = {
-    "potato":  {"seed": "potato_seed",  "cost": 5,   "grow_s": 45,  "reward": 8,    "xp": 1,  "level": 1},
-    "carrot":  {"seed": "carrot_seed",  "cost": 20,  "grow_s": 120, "reward": 40,   "xp": 4,  "level": 1},
-    "corn":    {"seed": "corn_seed",    "cost": 45,  "grow_s": 300, "reward": 95,   "xp": 8,  "level": 1},
-    "tomato":  {"seed": "tomato_seed",  "cost": 90,  "grow_s": 480, "reward": 200,  "xp": 14, "level": 5},
-    "wheat":   {"seed": "wheat_seed",   "cost": 220, "grow_s": 1080,"reward": 560,  "xp": 32, "level": 5},
-    "pumpkin": {"seed": "pumpkin_seed", "cost": 400, "grow_s": 1800,"reward": 1050, "xp": 55, "level": 10},
+    "potato":     {"seed": "potato_seed",     "cost": 5,     "grow_s": 45,    "reward": 8,       "xp": 1,    "level": 1},
+    "carrot":     {"seed": "carrot_seed",     "cost": 20,    "grow_s": 120,   "reward": 40,      "xp": 4,    "level": 1},
+    "corn":       {"seed": "corn_seed",       "cost": 45,    "grow_s": 300,   "reward": 95,      "xp": 8,    "level": 1},
+    "tomato":     {"seed": "tomato_seed",     "cost": 90,    "grow_s": 480,   "reward": 200,     "xp": 14,   "level": 5},
+    "onion":      {"seed": "onion_seed",      "cost": 140,   "grow_s": 720,   "reward": 330,     "xp": 22,   "level": 5},
+    "wheat":      {"seed": "wheat_seed",      "cost": 220,   "grow_s": 1080,  "reward": 560,     "xp": 32,   "level": 5},
+    "pumpkin":    {"seed": "pumpkin_seed",    "cost": 400,   "grow_s": 1800,  "reward": 1050,    "xp": 55,   "level": 10},
+    "melon":      {"seed": "melon_seed",      "cost": 650,   "grow_s": 2700,  "reward": 1800,    "xp": 80,   "level": 10},
+    "cucumber":   {"seed": "cucumber_seed",   "cost": 850,   "grow_s": 3600,  "reward": 2400,    "xp": 105,  "level": 10},
+    "pepper":     {"seed": "pepper_seed",     "cost": 1300,  "grow_s": 5400,  "reward": 4000,    "xp": 150,  "level": 15},
+    "strawberry": {"seed": "strawberry_seed", "cost": 1900,  "grow_s": 7200,  "reward": 6200,    "xp": 210,  "level": 15},
+    "blueberry":  {"seed": "blueberry_seed",  "cost": 2600,  "grow_s": 10800, "reward": 8800,    "xp": 280,  "level": 15},
+    "grape":      {"seed": "grape_seed",      "cost": 4000,  "grow_s": 14400, "reward": 9500,    "xp": 220,  "level": 20},
+    "eggplant":   {"seed": "eggplant_seed",   "cost": 5500,  "grow_s": 18000, "reward": 13000,   "xp": 280,  "level": 20},
+    "watermelon": {"seed": "watermelon_seed", "cost": 7500,  "grow_s": 21600, "reward": 18000,   "xp": 360,  "level": 20},
+    "dragonfruit":{"seed": "dragonfruit_seed","cost": 12000, "grow_s": 28800, "reward": 28000,   "xp": 500,  "level": 25},
+    "pineapple":  {"seed": "pineapple_seed",  "cost": 18000, "grow_s": 36000, "reward": 42000,   "xp": 700,  "level": 25},
+    "starfruit":  {"seed": "starfruit_seed",  "cost": 50000, "grow_s": 64800, "reward": 100000,  "xp": 1200, "level": 30},
+    "moonberry":  {"seed": "moonberry_seed",  "cost": 70000, "grow_s": 72000, "reward": 150000,  "xp": 1500, "level": 33},
+    "goldroot":   {"seed": "goldroot_seed",   "cost": 175000,"grow_s": 93600, "reward": 390000,  "xp": 3000, "level": 42},
 }
 
 
