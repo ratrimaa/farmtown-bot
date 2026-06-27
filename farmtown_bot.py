@@ -291,11 +291,11 @@ class FarmBot:
 
     def best_crop(self):
         if self.crop: return self.crop, CROPS.get(self.crop, CROPS['carrot'])
-        best, bs = None, -1
+        best, bl = None, -1
         for n, c in CROPS.items():
             if self.level >= c['level'] and (self.inv.get(c['seed'],0) > 0 or self.gold >= c['cost']):
-                s = c['xp']/max(c['grow_s']/60,0.1) + (3 if self.inv.get(c['seed'],0)>0 else 0)
-                if s > bs: bs, best = s, (n, c)
+                if c['level'] > bl:
+                    bl, best = c['level'], (n, c)
         return best or ('carrot', CROPS['carrot'])
 
     def run(self, interval=2.0):
